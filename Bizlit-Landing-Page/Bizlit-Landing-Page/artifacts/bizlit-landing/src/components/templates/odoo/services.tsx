@@ -9,8 +9,8 @@ import {
   Truck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { PHOTO_CREDITS, SERVICE_PHOTOS } from "@/data/service-photos";
-import { Band, Container, Mark, odBtn } from "./bits";
+import { SERVICE_PHOTOS } from "@/data/service-photos";
+import { Band, Mark, odBtn } from "./bits";
 
 /*
  * The five classes the desk actually runs, and the work itself — the bands
@@ -22,10 +22,10 @@ import { Band, Container, Mark, odBtn } from "./bits";
  * junk runs whose scrap floor pays the crew the same day. Each card carries a
  * photograph of that class of work rather than a screenshot of software.
  *
- * Photographs are freely licensed (CC0 / public domain / CC BY) and credited
- * in the footer. Every one gets the same crop and the same violet wash
- * (`.od-photo`) so a mixed set reads as one campaign instead of five stock
- * images.
+ * Photographs are freely licensed (CC0 / public domain / CC BY); the licence
+ * trail for each one lives beside the photo in `src/data/service-photos.ts`.
+ * Every one gets the same crop and the same violet wash (`.od-photo`) so a
+ * mixed set reads as one campaign instead of five stock images.
  */
 
 type Tone = "violet" | "orchid" | "indigo" | "fuchsia" | "gold";
@@ -55,7 +55,7 @@ const SERVICES: ServiceCard[] = [
     id: "storage",
     eyebrow: "Storage · lien sale",
     title: "Units heading to auction",
-    copy: "We read the auction photos before the gavel drops — brands, container mix, scrap floor — and bid only where the maths leaves room. If the bid passes the ceiling, we walk away.",
+    copy: "We read the auction photos before the gavel drops: brands, container mix, scrap floor. We bid only where the maths leaves room. If the bid passes the ceiling, we walk away.",
     points: ["Tenant keeps 25% of resale", "Facility gets a rentable unit", "Hard vetoes pass, no exceptions"],
     stat: "Bid ceiling = EV × 0.45",
     icon: <Archive size={17} />,
@@ -66,7 +66,7 @@ const SERVICES: ServiceCard[] = [
     id: "property",
     eyebrow: "Property · assignment",
     title: "Houses in distress",
-    copy: "Pre-foreclosure, tax-delinquent and probate houses. We contract at or below 70% of value minus repairs and assign to a mapped cash buyer — no listing, no commissions, no repairs on your side.",
+    copy: "Pre-foreclosure, tax-delinquent and probate houses. We contract at or below 70% of value minus repairs and assign to a mapped cash buyer. No listing, no commissions, no repairs on your side.",
     points: ["Written offer this week", "Close in 14 days", "You pay zero commission"],
     stat: "70% rule, fixed",
     icon: <Home size={17} />,
@@ -77,8 +77,8 @@ const SERVICES: ServiceCard[] = [
     id: "estate",
     eyebrow: "Estates · consignment",
     title: "Estate & probate cleanouts",
-    copy: "The house is cleared at no cost to the family, the contents are sold as liquidation agent, and 80–90% of the net comes back to the heirs. One signed authorization covers the whole job.",
-    points: ["Clear at no cost", "Heirs keep 80–90%", "Inventory & payout published"],
+    copy: "The house is cleared at no cost to the family, the contents are sold as liquidation agent, and 80 to 90% of the net comes back to the heirs. One signed authorization covers the whole job.",
+    points: ["Clear at no cost", "Heirs keep 80 to 90%", "Inventory & payout published"],
     stat: "Free clear",
     icon: <FileBox size={17} />,
     photo: "estate",
@@ -101,9 +101,9 @@ const SERVICES: ServiceCard[] = [
     title: "Junk & scrap runs",
     copy: "Anything past resale still pays. The scrap floor settles the same day, the crew is paid the day the yard pays us, and nothing here ever needs upfront capital.",
     points: ["Same-day cash", "Crew paid on the day", "Free removal on request"],
-    stat: "Crew takes 30–40%",
+    stat: "Crew takes 30 to 40%",
     icon: <Recycle size={17} />,
-    photo: "junk",
+    photo: "yardSale",
     tone: "orchid",
   },
 ];
@@ -112,18 +112,9 @@ export function ServicesBand() {
   return (
     <Band id="services" className="pt-[4rem] pb-[2rem] lg:pt-[6rem]">
       <div className="max-w-3xl">
-        <p className="flex items-center gap-[0.625rem] text-[0.75rem] font-semibold tracking-[0.16em] text-[var(--od-violet)] uppercase">
-          <span aria-hidden className="h-[1px] w-[1.75rem] bg-[rgba(109,40,217,0.35)]" />
-          Five classes of work
-        </p>
-        <h2 className="od-d2 mt-[1rem]">
+        <h2 className="od-d2">
           What we clear, <Mark>and what you get.</Mark>
         </h2>
-        <p className="mt-[1.25rem] text-[1.125rem] leading-relaxed text-[var(--od-body)]">
-          Every job starts the same way — a distress signal, a fixed score, one decision. What
-          changes is the class: a storage unit, a house, an estate, a closing business, or a
-          pile of junk. Here is what each one looks like, and what the owner walks away with.
-        </p>
       </div>
 
       <div className="mt-[3rem] grid gap-[1.5rem] md:grid-cols-2 xl:grid-cols-3">
@@ -190,50 +181,39 @@ export function ServicesBand() {
           </article>
         ))}
 
-        <article className="flex flex-col justify-between rounded-[0.75rem] border border-dashed border-[rgba(109,40,217,0.35)] bg-[var(--od-band-soft)] p-[1.75rem]">
-          <div>
-            <p className="flex items-center gap-[0.5rem] text-[0.75rem] font-semibold tracking-[0.16em] text-[var(--od-violet)] uppercase">
-              <Truck size={14} aria-hidden /> Multi-asset
-            </p>
-            <h3 className="od-h4 mt-[0.75rem] !text-[1.25rem]">
+        <article className="flex flex-col overflow-hidden rounded-[0.75rem] border border-dashed border-[rgba(109,40,217,0.35)] bg-[var(--od-band-soft)]">
+          <div className="od-photo aspect-[16/10]">
+            <img
+              src={SERVICE_PHOTOS.crew.src}
+              alt={SERVICE_PHOTOS.crew.alt}
+              width={SERVICE_PHOTOS.crew.width}
+              height={SERVICE_PHOTOS.crew.height}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="od-photo-tag flex items-center gap-[0.35rem]">
+              <Truck size={12} aria-hidden /> Multi-asset
+            </span>
+          </div>
+
+          <div className="flex flex-1 flex-col p-[1.75rem]">
+            <h3 className="od-h4 !text-[1.25rem]">
               House, unit and car on one estate?
             </h3>
             <p className="mt-[0.75rem] text-[0.9375rem] leading-relaxed text-[var(--od-body)]">
               We score each asset, then price the whole thing as one package. A bundle discount
               for the owner usually beats what the parts would fetch separately.
             </p>
+            <div className="mt-auto pt-[1.5rem]">
+              <a href="#contact" className={odBtn}>
+                Send the details
+              </a>
+            </div>
           </div>
-          <a href="#contact" className={cn(odBtn, "mt-[1.5rem] self-start")}>
-            Send the details
-          </a>
         </article>
       </div>
     </Band>
   );
 }
 
-/* ------------------------------------------------ small print for photos */
 
-export function PhotoCreditLine() {
-  return (
-    <Container className="pb-[2rem]">
-      <p className="text-[0.6875rem] leading-relaxed text-[var(--od-muted)]">
-        Service photography:{" "}
-        {PHOTO_CREDITS.map((credit, index) => (
-          <span key={credit.href}>
-            {index > 0 ? " · " : ""}
-            <a
-              href={credit.href}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              className="underline decoration-[rgba(111,104,137,0.4)] underline-offset-2 hover:text-[var(--od-violet)]"
-            >
-              {credit.title}
-            </a>{" "}
-            by {credit.author} ({credit.licence})
-          </span>
-        ))}
-      </p>
-    </Container>
-  );
-}

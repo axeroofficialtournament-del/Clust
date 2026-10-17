@@ -1,19 +1,18 @@
 import {
   BellRing,
-  BadgeCheck,
+  Check,
   ChevronDown,
   ClipboardList,
   Gavel,
   Mail,
   Radar,
   Recycle,
-  ShieldCheck,
   Truck,
   Wallet,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { Band, Container, Mark, Underline, odBtn, odBtnLight } from "./bits";
+import { Band, Container, Mark, Underline } from "./bits";
 
 /*
  * The middle of the odoo.com landing page, in order: what the product does, the
@@ -56,7 +55,7 @@ const FEATURES: { icon: ReactNode; label: string; note: string; tone: Tone }[] =
   {
     icon: <ClipboardList size={17} />,
     label: "Four scoring engines",
-    note: "Storage, wholesale, estate and scrap math that is fixed — same inputs, same score, every time",
+    note: "Storage, wholesale, estate and scrap math that is fixed. Same inputs, same score, every time",
     tone: "orchid",
   },
   {
@@ -74,19 +73,19 @@ const FEATURES: { icon: ReactNode; label: string; note: string; tone: Tone }[] =
   {
     icon: <Truck size={17} />,
     label: "Cleanout crews",
-    note: "Estates cleared free, resold as agent, with heirs remitted 80–90% of net proceeds",
+    note: "Estates cleared free, resold as agent, with heirs remitted 80 to 90% of net proceeds",
     tone: "fuchsia",
   },
   {
     icon: <Recycle size={17} />,
     label: "Scrap floor",
-    note: "Same-day cash runs that fund the whole operation — runners paid the day the yard pays us",
+    note: "Same-day cash runs that fund the whole operation, with runners paid the day the yard pays us",
     tone: "violet",
   },
   {
     icon: <BellRing size={17} />,
     label: "Watchlist re-scores",
-    note: "Every timeline event — auction date, foreclosure date, house closing — wakes its lead and rescores it",
+    note: "Every timeline event, from an auction date to a house closing, wakes its lead and rescores it",
     tone: "indigo",
   },
   {
@@ -105,18 +104,13 @@ export function FeaturesBand() {
         <div className="p-[1.5rem] md:p-[2.5rem] xl:p-[3rem]">
           <div className="flex items-start justify-between gap-[1.5rem] md:gap-[3rem]">
             <div className="min-w-0">
-              <p className="flex items-center gap-[0.625rem] text-[0.75rem] font-semibold tracking-[0.16em] text-[var(--od-violet)] uppercase">
-                <span aria-hidden className="h-[1px] w-[1.75rem] bg-[rgba(109,40,217,0.35)]" />
-                One desk, eight jobs
-              </p>
-
-              <h3 className="od-h4 mt-[1rem]">
+              <h3 className="od-h4">
                 Everything the desk does <Mark>for you</Mark>
               </h3>
 
               <p className="mt-[0.75rem] max-w-[42rem] text-[1rem] leading-relaxed text-[var(--od-body)]">
                 Every distress signal lands in one place, gets scored by fixed math and comes
-                out the other end with a single play attached — nothing sits around as a vague
+                out the other end with a single play attached. Nothing sits around as a vague
                 maybe.
               </p>
             </div>
@@ -126,7 +120,7 @@ export function FeaturesBand() {
                 src="/logo.png"
                 width={72}
                 height={72}
-                alt="BIZLIT"
+                alt="Stuffout"
                 loading="lazy"
                 className="h-[3.5rem] w-[3.5rem] xl:h-[4.25rem] xl:w-[4.25rem]"
               />
@@ -163,141 +157,60 @@ export function FeaturesBand() {
   );
 }
 
-/* --------------------------------------------------------------- native AI */
-
-const AI_ITEMS = [
-  {
-    title: "Photo reads before bids",
-    body: "Auction and listing photos are read for brands, containers, hazards and scrap — the extraction that feeds the storage score.",
-  },
-  {
-    title: "Fixed math, not vibes",
-    body: "The AI does the looking; the engines do the scoring. Same inputs always produce the same score and the same play.",
-  },
-  {
-    title: "Calibrated probabilities",
-    body: "Predicted vs. realized is logged deal by deal. A category that misses by 30% gets its probabilities cut and its bid multiplier tightened.",
-  },
-];
-
-export function AiBand() {
-  return (
-    <section className="pt-[6rem] pb-[3rem] lg:text-center">
-      <Container>
-        <h2 className="od-d2 mb-[4rem]">
-          AI that reads the <Mark tone="coral">records</Mark> for you
-        </h2>
-
-        <div className="grid gap-x-[2rem] md:grid-cols-3 lg:text-left">
-          {AI_ITEMS.map((item) => (
-            <div key={item.title} className="od-card">
-              <h4 className="od-card-title od-h4">{item.title}</h4>
-              <p className="text-[1rem] leading-relaxed text-[var(--od-body)]">{item.body}</p>
-            </div>
-          ))}
-        </div>
-      </Container>
-    </section>
-  );
-}
-
 /* ------------------------------------------------------------- done right */
 
-const PRINCIPLES: { title: string; body: string; icon: ReactNode }[] = [
+/*
+ * The four promises are set as one ruled panel rather than four floating
+ * cards: each rule is a cell with its index, the promise, the reasoning, and a
+ * one-line fact under a dashed score — the shape of a spec sheet, not a
+ * feature grid.
+ */
+const PRINCIPLES: { title: string; body: string; fact: string }[] = [
   {
     title: "One desk, every asset class",
     body: "Storage, real estate, estates, commercial closures and junk all share one lead database, one pipeline and one sign-in.",
-    icon: <BadgeCheck />,
+    fact: "One queue, one ledger",
   },
   {
     title: "Deterministic scoring",
-    body: "Four engines with published weights and a master router that rejects what it should. The gambling happens at auction only when the math says to.",
-    icon: <ClipboardList />,
+    body: "Four engines with published weights and a master router that rejects what it should. Nothing is left to a mood.",
+    fact: "Same inputs, same score",
   },
   {
     title: "Nothing paid upfront",
-    body: "Revenue share, assignment and pay-after-sale structures. The float comes from scrap runs — never from the reserve.",
-    icon: <Wallet />,
+    body: "Revenue share, assignment or pay-after-sale. The float comes from scrap runs, never from your reserve.",
+    fact: "No deposit, ever",
   },
   {
     title: "Hard vetoes built in",
-    body: "Biohazards, unresolvable title defects, unlicensed jurisdictions — an automatic pass, whatever the score says.",
-    icon: <ShieldCheck />,
+    body: "Biohazards, unresolvable title defects and unlicensed jurisdictions are an automatic pass, whatever the score says.",
+    fact: "Three automatic refusals",
   },
-];
-
-const PLAN_FEATURES = [
-  "Storage engine with comped bid ceilings",
-  "Wholesale engine at the 70% rule",
-  "Estate cleanout-consign at 80–90% remit",
-  "Scrap gate and same-day runner payouts",
-  "Master router and watchlist re-scores",
-  "Deal ledger with predicted-vs-realized",
 ];
 
 export function DoneRightBand() {
   return (
     <Band leaf className="py-[3rem] lg:py-[6rem]">
       <h2 className="od-d2 mb-[4rem] lg:text-center">
-        Distress intelligence
+        Stuffout
         <br />
         done <Underline>right</Underline>.
       </h2>
 
-      <div className="grid gap-x-[2rem] md:grid-cols-2">
-        {PRINCIPLES.map((item) => (
-          <div key={item.title} className="od-card">
-            <span className="od-card-icon" style={{ color: "var(--od-orchid)" }} aria-hidden>
-              {item.icon}
+      <div className="od-principles">
+        {PRINCIPLES.map((item, index) => (
+          <article key={item.title} className="od-principle">
+            <span className="od-principle-num" aria-hidden>
+              {String(index + 1).padStart(2, "0")}
             </span>
-            <h4 className="od-card-title od-h4">{item.title}</h4>
-            <p className="text-[1rem] leading-relaxed text-[var(--od-body)]">{item.body}</p>
-          </div>
+            <h3 className="od-principle-title">{item.title}</h3>
+            <p className="od-principle-body">{item.body}</p>
+            <p className="od-principle-fact">
+              <Check size={12} strokeWidth={3} aria-hidden />
+              {item.fact}
+            </p>
+          </article>
         ))}
-      </div>
-
-      {/* Odoo's editions block, holding our single plan. */}
-      <div
-        id="pricing"
-        className="mt-[4rem] rounded-[0.75rem] border border-[var(--od-border)] bg-[var(--od-surface)] p-[2rem] md:p-[4rem]"
-      >
-        <div className="grid gap-[2rem] md:grid-cols-[1fr_1.25fr] md:gap-[4rem]">
-          <div>
-            <h3 className="od-h4 mb-[1rem]">One plan, every asset class</h3>
-            <p className="text-[var(--od-body)]">For solo and small distressed-asset teams.</p>
-            <p className="mt-[1.5rem] text-[1.5rem] font-semibold text-[var(--od-ink)]">
-              $0{" "}
-              <span className="text-[1rem] font-normal text-[var(--od-muted)]">
-                upfront — we take a share of each deal we monetize
-              </span>
-            </p>
-            <div className="mt-[1.5rem] flex flex-wrap gap-[1rem]">
-              <a href="#contact" className={odBtn}>
-                Request a clearance
-              </a>
-              <a href="#process" className={odBtnLight}>
-                How it runs
-              </a>
-            </div>
-            <p className="mt-[1rem] text-[0.875rem] text-[var(--od-muted)]">
-              Every deal is structured as revenue share, assignment or pay-after-sale
-            </p>
-          </div>
-
-          <ul className="grid gap-[0.75rem] self-center sm:grid-cols-2">
-            {PLAN_FEATURES.map((feature) => (
-              <li key={feature} className="flex items-start gap-[0.75rem]">
-                <BadgeCheck
-                  size={18}
-                  className="mt-[0.25rem] shrink-0"
-                  style={{ color: "var(--od-orchid)" }}
-                  aria-hidden
-                />
-                <span className="text-[1rem] text-[var(--od-ink)]">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </Band>
   );

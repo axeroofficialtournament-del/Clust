@@ -1,13 +1,148 @@
+import { useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
+import { MoveHorizontal } from "lucide-react";
 import { SERVICE_PHOTOS } from "@/data/service-photos";
 import { Container, Mark, odBtn, odBtnLight } from "./bits";
 
 /*
  * The hero, in two columns: the promise on the left, the thing being sold on
- * the right — one apartment photographed twice, furnished and then cleared.
+ * the right — one apartment photographed twice, clustered and then cleared,
+ * stacked into a single frame with a handle you drag from one state to the
+ * other.
  *
  * The split is the whole pitch in one image, so the words stay short: a
- * headline, a line of what and who for, two buttons, and the terms underneath.
+ * headline, a line of what and who for, and two buttons.
  */
+
+const clamp = (n: number) => Math.min(100, Math.max(0, n));
+
+/** One frame, two states: the clustered side follows the handle as you drag. */
+function SplitComparison() {
+  const frame = useRef<HTMLDivElement>(null);
+  const [split, setSplit] = useState(50);
+  const [dragging, setDragging] = useState(false);
+
+  function track(clientX: number) {
+    const rect = frame.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0) return;
+    setSplit(clamp(((clientX - rect.left) / rect.width) * 100));
+  }
+
+  function onPointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (event.button !== 0) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setDragging(true);
+    track(event.clientX);
+  }
+
+  function onPointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (dragging) track(event.clientX);
+  }
+
+  function stopDragging(event: PointerEvent<HTMLDivElement>) {
+    setDragging(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  function onKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    const step = event.shiftKey ? 10 : 2;
+    switch (event.key) {
+      case "ArrowLeft":
+      case "ArrowDown":
+        setSplit((n) => clamp(n - step));
+        break;
+      case "ArrowRight":
+      case "ArrowUp":
+        setSplit((n) => clamp(n + step));
+        break;
+      case "Home":
+        setSplit(0);
+        break;
+      case "End":
+        setSplit(100);
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+  }
+
+  const clustered = SERVICE_PHOTOS.clustered;
+  const cleared = SERVICE_PHOTOS.cleared;
+
+  return (
+    <div
+      ref={frame}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={stopDragging}
+      onPointerCancel={stopDragging}
+      className="od-photo relative aspect-[5/4] cursor-ew-resize rounded-[0.75rem] select-none"
+      style={{ touchAction: "pan-y" }}
+    >
+      {/* the cleared room holds the whole frame */}
+      <div className="absolute inset-0">
+        <img
+          src={cleared.src}
+          alt={cleared.alt}
+          width={cleared.width}
+          height={cleared.height}
+          loading="eager"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+      </div>
+
+      {/* the clustered room is revealed to the left of the handle */}
+      <div
+        className="absolute inset-0"
+        style={{ clipPath: `inset(0 ${100 - split}% 0 0)` }}
+      >
+        <img
+          src={clustered.src}
+          alt={clustered.alt}
+          width={clustered.width}
+          height={clustered.height}
+          loading="eager"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+      </div>
+
+      <span className="od-photo-flag od-photo-flag-left !text-[0.625rem]">
+        Clustered
+      </span>
+      <span className="od-photo-flag od-photo-flag-right !text-[0.625rem] !bg-[rgba(109,40,217,0.85)]">
+        Cleared
+      </span>
+
+      {/* the swipe line */}
+      <span
+        aria-hidden
+        className="absolute inset-y-0 z-[2] w-[3px] -translate-x-1/2 bg-white/90 shadow-[0_0_0.5rem_rgba(23,16,43,0.35)]"
+        style={{ left: `${split}%` }}
+      />
+
+      {/* the drag handle */}
+      <button
+        type="button"
+        role="slider"
+        aria-label="Drag to compare the clustered and cleared states"
+        aria-orientation="horizontal"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(split)}
+        aria-valuetext={`${Math.round(split)}% clustered`}
+        onKeyDown={onKeyDown}
+        className="absolute top-1/2 z-[3] flex h-[2.75rem] w-[2.75rem] -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-[var(--od-border)] bg-white text-[var(--od-violet)] shadow-[0_0.35rem_1rem_rgba(23,16,43,0.3)] outline-none focus-visible:ring-4 focus-visible:ring-[rgba(109,40,217,0.3)]"
+        style={{ left: `${split}%` }}
+      >
+        <MoveHorizontal size={20} aria-hidden />
+      </button>
+    </div>
+  );
+}
 
 export default function Hero() {
   return (
@@ -16,19 +151,14 @@ export default function Hero() {
         <div className="grid items-center gap-[2rem] lg:grid-cols-[1.02fr_1fr] lg:gap-[3.5rem]">
           {/* ------------------------------------------------------ words */}
           <div className="text-center lg:text-left">
-            <p className="inline-flex items-center gap-[0.5rem] rounded-full bg-[var(--od-tone-violet-bg)] px-[0.75rem] py-[0.3rem] text-[0.75rem] font-semibold tracking-[0.08em] text-[var(--od-tone-violet-fg)] uppercase">
-              <span aria-hidden className="h-[0.4rem] w-[0.4rem] rounded-full bg-[var(--od-violet)]" />
-              Clearance · resale · payout
-            </p>
-
-            <h1 className="od-d1 mt-[1.25rem]">
+            <h1 className="od-d1">
               Clear the space.
               <br />
               <Mark>Keep the value.</Mark>
             </h1>
 
             <p className="mx-auto mt-[1.5rem] max-w-[34rem] text-[1.125rem] leading-relaxed text-[var(--od-body)] lg:mx-0 lg:text-[1.25rem]">
-              Storage units, probate homes and closing businesses — cleared, sorted and sold,
+              Storage units, probate homes and closing businesses, cleared, sorted and sold,
               with nothing to pay upfront. You get the empty room and your share of what it held.
             </p>
 
@@ -40,52 +170,11 @@ export default function Hero() {
                 See what we clear
               </a>
             </div>
-
-            <p className="mt-[1.25rem] text-[0.875rem] text-[var(--od-muted)]">
-              No deposit · written agreement · one crew from first look to handover
-            </p>
           </div>
 
           {/* ------------------------------------------------------ picture */}
           <figure className="relative m-0">
-            <div className="grid grid-cols-2 gap-[0.5rem] sm:gap-[0.75rem]">
-              <div className="od-photo aspect-[3/4] rounded-[0.75rem]">
-                <img
-                  src={SERVICE_PHOTOS.furnished.src}
-                  alt={SERVICE_PHOTOS.furnished.alt}
-                  width={SERVICE_PHOTOS.furnished.width}
-                  height={SERVICE_PHOTOS.furnished.height}
-                  loading="eager"
-                  decoding="async"
-                />
-                <span className="od-photo-flag od-photo-flag-left !text-[0.625rem]">
-                  Furnished
-                </span>
-              </div>
-
-              <div className="od-photo aspect-[3/4] rounded-[0.75rem]">
-                <img
-                  src={SERVICE_PHOTOS.cleared.src}
-                  alt={SERVICE_PHOTOS.cleared.alt}
-                  width={SERVICE_PHOTOS.cleared.width}
-                  height={SERVICE_PHOTOS.cleared.height}
-                  loading="eager"
-                  decoding="async"
-                />
-                <span className="od-photo-flag od-photo-flag-right !text-[0.625rem] !bg-[rgba(109,40,217,0.85)]">
-                  Cleared
-                </span>
-              </div>
-            </div>
-
-            <figcaption className="mx-auto -mt-[1.25rem] w-[86%] rounded-[0.6rem] border border-[var(--od-border)] bg-white px-[1rem] py-[0.7rem] text-center shadow-[0_0.75rem_2rem_rgba(23,16,43,0.10)]">
-              <span className="block text-[0.8125rem] font-semibold text-[var(--od-ink)]">
-                One apartment, two states
-              </span>
-              <span className="block text-[0.75rem] leading-snug text-[var(--od-muted)]">
-                Part furnished, part empty — that is the handover we sell.
-              </span>
-            </figcaption>
+            <SplitComparison />
           </figure>
         </div>
       </Container>

@@ -1,27 +1,4 @@
-import {
-  Archive,
-  Armchair,
-  Ban,
-  Bike,
-  Boxes,
-  Briefcase,
-  Camera,
-  Car,
-  DoorOpen,
-  Gavel,
-  Guitar,
-  Hammer,
-  HardHat,
-  Home,
-  KeyRound,
-  Laptop,
-  Package,
-  Recycle,
-  Smartphone,
-  Sofa,
-  Tv,
-  Wrench,
-} from "lucide-react";
+import { MOSAIC_PHOTOS } from "@/data/mosaic-photos";
 import { Container, Doodle } from "./bits";
 
 /*
@@ -36,49 +13,10 @@ import { Container, Doodle } from "./bits";
  * a 0.75rem grey card in two columns.
  *
  * The tiles are the things that come out of the deals — a unit, a property, an
- * estate lot, a scrap run — drawn as the icon library's own marks sitting on
- * the page's tints, so no tile ever flashes empty waiting on a photograph.
+ * estate lot, a scrap run — drawn as real photographs of the appliances,
+ * furniture, tools and vehicles that fill them, cropped square so a mixed set
+ * reads as one wall.
  */
-
-/* Enough marks to fill the wall with no repeats: units, contents, tools,
-   properties and the network the deals run through. */
-const TILE_ICONS = [
-  Package,
-  Home,
-  Gavel,
-  Wrench,
-  Sofa,
-  DoorOpen,
-  Hammer,
-  Car,
-  Laptop,
-  Boxes,
-  KeyRound,
-  Briefcase,
-  Archive,
-  Guitar,
-  Recycle,
-  Armchair,
-  Tv,
-  HardHat,
-  Smartphone,
-  Ban,
-  Bike,
-  Camera,
-  Package,
-  Home,
-  Boxes,
-  KeyRound,
-  Hammer,
-  Tv,
-  Archive,
-  Recycle,
-  Armchair,
-  Laptop,
-  Wrench,
-  Sofa,
-  Car,
-] as const;
 
 const MOSAIC_TINTS = [
   "var(--od-tile-1)",
@@ -91,6 +29,9 @@ const MOSAIC_TINTS = [
   "var(--od-tile-8)",
 ];
 
+/** The wall cycles the photographs in file order. */
+const PHOTOS = Object.values(MOSAIC_PHOTOS);
+
 const TILE_SHAPES = ["rounded-full", "rounded-[38%]", "rounded-[0.5rem]"];
 
 /** 80px tiles, four to seven per row, centred under the white pill. */
@@ -100,14 +41,22 @@ function Mosaic() {
   return (
     <div className="od-mosaic flex flex-wrap justify-between" aria-hidden>
       {cells.map((i) => {
-        const Icon = TILE_ICONS[i % TILE_ICONS.length];
+        const photo = PHOTOS[i % PHOTOS.length];
         return (
           <div
             key={i}
-            className={`flex h-20 w-20 items-center justify-center overflow-hidden p-4 md:m-[0.75rem] m-[0.25rem] ${TILE_SHAPES[i % TILE_SHAPES.length]}`}
+            className={`flex h-20 w-20 items-center justify-center overflow-hidden md:m-[0.75rem] m-[0.25rem] ${TILE_SHAPES[i % TILE_SHAPES.length]}`}
             style={{ backgroundColor: MOSAIC_TINTS[i % MOSAIC_TINTS.length] }}
           >
-            <Icon className="h-8 w-8 text-[var(--od-ink)] opacity-45" />
+            <img
+              src={photo.src}
+              alt=""
+              width={480}
+              height={480}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
           </div>
         );
       })}
@@ -154,7 +103,7 @@ export function UsersBand() {
               to hand it over
             </h6>
             <span className="text-[1.5rem]">
-              units, houses and estates handled with BIZLIT
+              units, houses and estates handled with Stuffout
             </span>
           </div>
         </div>

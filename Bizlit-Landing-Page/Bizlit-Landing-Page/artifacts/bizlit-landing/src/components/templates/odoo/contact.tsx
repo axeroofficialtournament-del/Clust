@@ -1,13 +1,12 @@
 import { useState, type FormEvent } from "react";
 import {
   Archive,
+  ArrowRight,
   Building2,
   CircleAlert,
   FileBox,
   Home,
-  LockKeyhole,
   PackageCheck,
-  Send,
   Check,
   Trash2,
 } from "lucide-react";
@@ -50,29 +49,32 @@ const ENDPOINT =
   "/api/service-requests";
 
 const fieldBase =
-  "w-full rounded-[0.5rem] border border-[var(--od-border)] bg-white px-[0.875rem] py-[0.625rem] text-[0.9375rem] text-[var(--od-ink)] shadow-[inset_0_1px_2px_rgba(23,16,43,0.04)] outline-none transition placeholder:text-[rgba(111,104,137,0.75)] focus:border-[var(--od-violet)] focus:ring-3 focus:ring-[rgba(109,40,217,0.18)]";
+  "w-full rounded-[0.5rem] border border-[var(--od-border)] bg-[var(--od-surface)] px-[0.875rem] py-[0.625rem] text-[0.9375rem] text-[var(--od-ink)] shadow-[inset_0_1px_2px_rgba(23,16,43,0.04)] outline-none transition placeholder:text-[var(--od-muted)] focus:border-[var(--od-violet)] focus:ring-3 focus:ring-[rgba(109,40,217,0.18)]";
 const labelBase =
   "mb-[0.375rem] flex items-center gap-[0.4rem] text-[0.8125rem] font-semibold text-[var(--od-ink)]";
 const requiredChip =
-  "rounded-full bg-[var(--od-tone-violet-bg)] px-[0.4rem] py-[0.05rem] text-[0.625rem] font-semibold tracking-wide text-[var(--od-tone-violet-fg)] uppercase";
+  "text-[0.625rem] font-medium tracking-[0.12em] text-[var(--od-muted)] uppercase";
 
 type Accepted = { requestId: string; submittedAt?: string; message: string };
 
 export function ContactBand() {
   return (
     <Band id="contact" className="pt-[1rem] pb-[4rem] lg:pt-[2rem] lg:pb-[6rem]">
-      <div className="grid gap-[2rem] lg:grid-cols-[0.85fr_1.15fr] lg:gap-[3rem]">
+      {/* The page's main action, framed as its own lit panel. */}
+      <div className="relative overflow-hidden rounded-[1.25rem] border border-[rgba(109,40,217,0.18)] bg-[var(--od-surface)] p-[1.5rem] shadow-[0_2rem_4rem_-2rem_rgba(76,29,149,0.45)] md:p-[2.5rem] lg:p-[3rem]">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-[10rem] -right-[8rem] h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,rgba(109,40,217,0.16),transparent_70%)]"
+        />
+
+        <div className="relative grid gap-[2rem] lg:grid-cols-[0.8fr_1.2fr] lg:gap-[3rem]">
         <div>
-          <p className="flex items-center gap-[0.625rem] text-[0.75rem] font-semibold tracking-[0.16em] text-[var(--od-violet)] uppercase">
-            <span aria-hidden className="h-[1px] w-[1.75rem] bg-[rgba(109,40,217,0.35)]" />
-            Start a request
-          </p>
-          <h2 className="od-d2 mt-[1rem]">
+          <h2 className="od-d2">
             Tell us what needs <Mark>clearing.</Mark>
           </h2>
           <p className="mt-[1.25rem] text-[1.0625rem] leading-relaxed text-[var(--od-body)]">
             One form, whichever class of work it is. Give us the address or general area and what
-            is in the way — we come back with a fixed plan, a written agreement, and no cost to
+            is in the way. We come back with a fixed plan, a written agreement and no cost to
             find out.
           </p>
 
@@ -109,7 +111,8 @@ export function ContactBand() {
           </div>
         </div>
 
-        <ServiceRequestForm />
+          <ServiceRequestForm />
+        </div>
       </div>
     </Band>
   );
@@ -169,7 +172,7 @@ export function ServiceRequestForm() {
         throw new Error(body.error ?? "The request could not be sent right now.");
       }
       setAccepted({
-        requestId: body.requestId ?? "—",
+        requestId: body.requestId ?? "Pending",
         submittedAt: body.submittedAt,
         message:
           body.message ??
@@ -191,7 +194,7 @@ export function ServiceRequestForm() {
     return (
       <div
         role="status"
-        className="od-tile-shadow flex flex-col justify-center rounded-[0.75rem] border border-[var(--od-border)] bg-[var(--od-surface)] p-[2rem] text-center md:p-[2.5rem]"
+        className="flex flex-col justify-center rounded-[0.75rem] border border-[var(--od-border)] bg-[var(--od-surface)] p-[2rem] text-center shadow-[0_1px_2px_rgba(23,16,43,0.04),0_1.75rem_3.5rem_-2rem_rgba(45,20,90,0.28)] md:p-[2.5rem]"
       >
         <span className="mx-auto flex h-[3rem] w-[3rem] items-center justify-center rounded-full bg-[var(--od-tone-violet-bg)] text-[var(--od-violet)]">
           <Check size={22} strokeWidth={2.6} />
@@ -199,7 +202,7 @@ export function ServiceRequestForm() {
         <p className="mt-[1rem] text-[0.75rem] font-semibold tracking-[0.16em] text-[var(--od-violet)] uppercase">
           Request received
         </p>
-        <h3 className="od-h4 mt-[0.5rem]">Thank you — we have it.</h3>
+        <h3 className="od-h4 mt-[0.5rem]">Thank you. We have it.</h3>
         <p className="mx-auto mt-[0.75rem] max-w-[26rem] text-[0.9375rem] leading-relaxed text-[var(--od-body)]">
           {accepted.message}
         </p>
@@ -223,30 +226,22 @@ export function ServiceRequestForm() {
   }
 
   return (
-    <div className="od-tile-shadow rounded-[0.75rem] border border-[var(--od-border)] bg-[var(--od-surface)] p-[1.5rem] md:p-[2rem]">
-      <div className="flex items-start justify-between gap-[1rem] border-b border-[var(--od-border)] pb-[1rem]">
-        <div>
-          <p className="text-[0.6875rem] font-semibold tracking-[0.16em] text-[var(--od-violet)] uppercase">
-            Start here · 01
-          </p>
-          <h3 className="od-h4 mt-[0.35rem] !text-[1.375rem]">Request service</h3>
-          <p className="mt-[0.35rem] text-[0.875rem] text-[var(--od-body)]">
-            Fields marked required need an answer.
-          </p>
-        </div>
-        <span
-          aria-hidden
-          className="flex h-[2.5rem] w-[2.5rem] shrink-0 items-center justify-center rounded-full bg-[var(--od-tone-violet-bg)] text-[var(--od-violet)]"
-        >
-          <Send size={16} />
-        </span>
+    <div className="relative overflow-hidden rounded-[0.75rem] border border-[var(--od-border)] bg-[var(--od-surface)] shadow-[0_1px_2px_rgba(23,16,43,0.04),0_1.75rem_3.5rem_-2rem_rgba(45,20,90,0.28)]">
+      {/* the card's own masthead: this is the page's primary action */}
+      <div className="od-form-head">
+        <p className="od-form-kicker">Free assessment</p>
+        <h3 className="od-form-title">Request service</h3>
+        <p className="od-form-lede">
+          A person reads every request. You hear back within one working day.
+        </p>
       </div>
 
+      <div className="p-[1.5rem] md:p-[2rem]">
       <form onSubmit={handleSubmit} noValidate={false}>
         <fieldset disabled={pending} className="m-0 min-w-0 border-0 p-0">
-          <section className="mt-[1.25rem]">
-            <p className="flex items-center gap-[0.5rem] text-[0.8125rem] font-semibold text-[var(--od-ink)]">
-              <span className="text-[var(--od-violet)]">01</span> What do you need cleared?
+          <section>
+            <p className="od-step-head">
+              <span className="od-step-num">01</span> What do you need cleared?
             </p>
             <div
               id="service-type"
@@ -273,7 +268,7 @@ export function ServiceRequestForm() {
                       "flex cursor-pointer items-center gap-[0.4rem] rounded-[0.5rem] border px-[0.6rem] py-[0.5rem] text-left text-[0.8125rem] font-medium transition",
                       selected
                         ? "border-[var(--od-violet)] bg-[var(--od-tone-violet-bg)] text-[var(--od-tone-violet-fg)]"
-                        : "border-[var(--od-border)] bg-white text-[var(--od-ink)] hover:border-[rgba(109,40,217,0.45)]",
+                        : "border-[var(--od-border)] bg-[var(--od-surface)] text-[var(--od-ink)] hover:border-[rgba(109,40,217,0.45)]",
                     )}
                   >
                     <Icon size={15} strokeWidth={1.8} />
@@ -294,8 +289,8 @@ export function ServiceRequestForm() {
           </section>
 
           <section className="mt-[1.5rem]">
-            <p className="flex items-center gap-[0.5rem] text-[0.8125rem] font-semibold text-[var(--od-ink)]">
-              <span className="text-[var(--od-violet)]">02</span> Where and what?
+            <p className="od-step-head">
+              <span className="od-step-num">02</span> Where and what?
             </p>
 
             <div className="mt-[0.75rem] space-y-[0.875rem]">
@@ -347,8 +342,8 @@ export function ServiceRequestForm() {
           </section>
 
           <section className="mt-[1.5rem]">
-            <p className="flex items-center gap-[0.5rem] text-[0.8125rem] font-semibold text-[var(--od-ink)]">
-              <span className="text-[var(--od-violet)]">03</span> How can we reach you?
+            <p className="od-step-head">
+              <span className="od-step-num">03</span> How can we reach you?
             </p>
 
             <div className="mt-[0.75rem] grid gap-[0.875rem] sm:grid-cols-2">
@@ -413,7 +408,7 @@ export function ServiceRequestForm() {
               className="mt-[0.15rem] h-[1rem] w-[1rem] shrink-0 accent-[var(--od-violet-solid)]"
             />
             <span>
-              I agree that Bizlit may contact me about this request.{" "}
+              I agree that Stuffout may contact me about this request.{" "}
               <strong className="font-semibold text-[var(--od-ink)]">Required</strong>
             </span>
           </label>
@@ -429,18 +424,15 @@ export function ServiceRequestForm() {
           </div>
         )}
 
-        <div className="mt-[1.25rem] flex flex-wrap items-center justify-between gap-[0.75rem]">
-          <span className="flex items-center gap-[0.35rem] text-[0.75rem] text-[var(--od-muted)]">
-            <LockKeyhole size={12} /> Used only to reply to this request.
-          </span>
-          <button
-            type="submit"
-            disabled={pending}
-            className="od-btn od-btn-primary cursor-pointer disabled:cursor-wait disabled:opacity-70"
-          >
-            {pending ? "Sending…" : "Send service request"}
-            {!pending && <Send size={13} />}
+        <div className="mt-[1.6rem] border-t border-[var(--od-border)] pt-[1.35rem]">
+          <button type="submit" disabled={pending} className="od-btn-submit">
+            {pending ? "Sending…" : "Send request"}
+            {!pending && <ArrowRight size={17} aria-hidden className="od-btn-submit-arrow" />}
           </button>
+
+          <p className="mt-[0.75rem] text-center text-[0.75rem] leading-relaxed text-[var(--od-muted)]">
+            No cost to find out. Your details are used only to reply to this request.
+          </p>
         </div>
         {pending && (
           <p role="status" className="mt-[0.75rem] text-[0.75rem] text-[var(--od-muted)]">
@@ -448,6 +440,7 @@ export function ServiceRequestForm() {
           </p>
         )}
       </form>
+      </div>
     </div>
   );
 }

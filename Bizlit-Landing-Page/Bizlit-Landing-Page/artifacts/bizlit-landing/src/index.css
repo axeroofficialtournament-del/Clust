@@ -337,7 +337,7 @@ html {
 /*
  * The Odoo marketing skin, scoped to the landing page so it never leaks into
  * the signed-in workspace. Type scale, control sizes and layout are read off
- * odoo.com itself; the palette is BIZLIT's own — the mark's violet
+ * odoo.com itself; the palette is Stuffout's own — the mark's violet
  * #6d28d9 leading, orchid #a855f7 second, gold #fbb130 on the markers.
  *
  * The signature is the display face: every big heading is Caveat 700, a
@@ -360,6 +360,8 @@ html {
 
   --od-violet: #6d28d9;
   --od-violet-deep: #4c1d95;
+  /* the type sitting on a marker stroke, in the page's own violet */
+  --od-mark-text: #6d28d9;
   --od-orchid: #a855f7;
   --od-ink: #17102b;
   --od-body: #443a5c;
@@ -458,6 +460,7 @@ html {
  */
 .theme-odoo .od-mark {
   background-image: var(--od-marker-yellow);
+  color: var(--od-mark-text);
   background-repeat: no-repeat;
   background-position: center 60%;
   background-size: contain;
@@ -467,6 +470,13 @@ html {
 .theme-odoo .od-mark-03 {
   background-image: var(--od-marker-yellow-03);
   background-position: center bottom;
+}
+
+/* Only the yellow strokes re-ink their words; blue and coral stay page ink. */
+.theme-odoo .od-mark-blue,
+.theme-odoo .od-mark-blue-bold,
+.theme-odoo .od-mark-coral {
+  color: inherit;
 }
 
 .theme-odoo .od-mark-coral {
@@ -546,6 +556,159 @@ html {
   padding: 1rem 2rem;
   font-size: 1.125rem;
   border-radius: 0.5rem;
+}
+
+/*
+ * The request form's furniture. Nothing here glows: the header is a quiet wash
+ * closed by a hairline, the steps are numbered like a printed form and ruled to
+ * the edge of the column, and the submit control is one solid deep violet with
+ * a crisp inner highlight instead of a gradient.
+ */
+.theme-odoo .od-form-head {
+  padding: 1.5rem 1.5rem 1.35rem;
+  background-color: var(--od-band);
+  border-bottom: 1px solid var(--od-border);
+}
+
+@media (min-width: 768px) {
+  .theme-odoo .od-form-head {
+    padding: 1.75rem 2rem 1.5rem;
+  }
+}
+
+.theme-odoo .od-form-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--od-violet);
+}
+
+.theme-odoo .od-form-kicker::before {
+  content: "";
+  width: 1.25rem;
+  height: 1px;
+  background-color: currentColor;
+  opacity: 0.6;
+}
+
+.theme-odoo .od-form-title {
+  margin-top: 0.55rem;
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--od-ink);
+}
+
+.theme-odoo .od-form-lede {
+  margin-top: 0.4rem;
+  max-width: 28rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--od-muted);
+}
+
+/* A step: a small tabular numeral, the question, then a rule to the edge. */
+.theme-odoo .od-step-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--od-ink);
+}
+
+.theme-odoo .od-step-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--od-border);
+}
+
+.theme-odoo .od-step-num {
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--od-violet);
+}
+
+.theme-odoo .od-btn-submit {
+  display: inline-flex;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid #45148c;
+  border-radius: 0.5rem;
+  background-color: #4c1d95;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 1px 2px rgba(23, 16, 43, 0.24);
+  transition:
+    background-color 0.16s ease-in-out,
+    border-color 0.16s ease-in-out,
+    box-shadow 0.16s ease-in-out;
+}
+
+.theme-odoo .od-btn-submit:hover:not(:disabled) {
+  background-color: #411780;
+  border-color: #38116f;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0.4rem 1.1rem -0.5rem rgba(45, 12, 90, 0.7);
+}
+
+.theme-odoo .od-btn-submit:active:not(:disabled) {
+  background-color: #3a1470;
+}
+
+.theme-odoo .od-btn-submit:focus-visible {
+  outline: 2px solid var(--od-violet);
+  outline-offset: 2px;
+}
+
+.theme-odoo .od-btn-submit:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.theme-odoo .od-btn-submit-arrow {
+  transition: transform 0.16s ease-in-out;
+}
+
+.theme-odoo .od-btn-submit:hover:not(:disabled) .od-btn-submit-arrow {
+  transform: translateX(2px);
+}
+
+.theme-odoo.theme-odoo-dark .od-btn-submit {
+  background-color: #7c3aed;
+  border-color: #8f55f5;
+}
+
+.theme-odoo.theme-odoo-dark .od-btn-submit:hover:not(:disabled) {
+  background-color: #8b5cf6;
+  border-color: #9a6bf8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-odoo .od-btn-submit,
+  .theme-odoo .od-btn-submit-arrow {
+    transition: none;
+  }
 }
 
 .theme-odoo .od-btn-sm {
@@ -1220,19 +1383,29 @@ html {
   transform: scale(1.06);
 }
 
+/*
+ * The class badge each service photograph wears. A solid violet chip with a
+ * hairline edge and its own shadow, lettered in the label's own casing so it
+ * reads as a badge on the work rather than a section eyebrow.
+ */
 .theme-odoo .od-photo-tag {
   position: absolute;
   z-index: 1;
   top: 1rem;
   left: 1rem;
-  padding: 0.3rem 0.65rem;
-  border-radius: 999px;
-  background-color: rgba(255, 255, 255, 0.92);
-  color: var(--od-violet-deep);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background-color: var(--od-violet-solid);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  box-shadow: 0 0.5rem 1.25rem -0.4rem rgba(23, 16, 43, 0.6);
 }
 
 .theme-odoo .od-photo-flag {
@@ -1258,44 +1431,86 @@ html {
   right: 1rem;
 }
 
-/* `s_wd_features_item`: the white tile Odoo wraps each principle in. */
-.theme-odoo .od-card {
-  position: relative;
-  margin-bottom: 2rem;
-  padding: 2rem;
-  background-color: var(--od-surface);
-  border: 1px solid #e9e3f7;
+/*
+ * The four promises close the page as one ruled panel rather than four floating
+ * tiles: a two-by-two of cells divided by hairlines, each holding its index, the
+ * promise, the reasoning, and a one-line fact under a dashed score.
+ */
+.theme-odoo .od-principles {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--od-border);
   border-radius: 0.75rem;
+  background-color: var(--od-surface);
 }
 
-.theme-odoo .od-card-title {
-  margin-bottom: 1.5rem;
+.theme-odoo .od-principle {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.5rem;
+  border-top: 1px solid var(--od-border);
 }
 
-.theme-odoo .od-card-icon {
-  display: none;
+.theme-odoo .od-principle:first-child {
+  border-top: 0;
 }
 
-@media (min-width: 768px) {
-  .theme-odoo .od-card-title {
-    margin-right: 75px;
+.theme-odoo .od-principle-num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--od-violet);
+}
+
+.theme-odoo .od-principle-title {
+  margin-top: 0.85rem;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--od-ink);
+}
+
+.theme-odoo .od-principle-body {
+  flex: 1 1 auto;
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--od-body);
+}
+
+.theme-odoo .od-principle-fact {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--od-border);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--od-muted);
+}
+
+.theme-odoo .od-principle-fact svg {
+  flex: none;
+  color: var(--od-violet);
+}
+
+@media (min-width: 640px) {
+  .theme-odoo .od-principles {
+    grid-template-columns: 1fr 1fr;
   }
-  .theme-odoo .od-card-icon {
-    position: absolute;
-    top: 0;
-    right: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 70px;
-    height: 70px;
-    background-color: #f6f2fe;
-    border-bottom-right-radius: 50%;
-    border-bottom-left-radius: 50%;
+  .theme-odoo .od-principle {
+    padding: 2.25rem 2rem;
   }
-  .theme-odoo .od-card-icon svg {
-    height: 35px;
-    width: 35px;
+  .theme-odoo .od-principle:nth-child(2) {
+    border-top: 0;
+  }
+  .theme-odoo .od-principle:nth-child(odd) {
+    border-right: 1px solid var(--od-border);
   }
 }
 
@@ -1397,7 +1612,7 @@ html {
  * ------------------------------------------------------------------ themes
  *
  * The day/night switch in the landing header owns everything below. Day is the
- * page odoo.com drew; night is BIZLIT's own violet after dark. Both classes sit
+ * page odoo.com drew; night is Stuffout's own violet after dark. Both classes sit
  * on the same element — the page wrapper — so the signed-in workspace inherits
  * neither. Surfaces, marker inks and the line art all re-point at tokens here.
  */
@@ -1504,6 +1719,8 @@ html {
   --od-border: #2f2452;
   --od-violet: #a78bfa;
   --od-violet-deep: #c4b5fd;
+  /* at night the bold stroke is re-inked violet, so the words stay light */
+  --od-mark-text: #ddd6fe;
   --od-orchid: #c084fc;
   --od-rose: #f472b6;
   --od-indigo: #a5b4fc;
@@ -1557,10 +1774,6 @@ html {
   background-color: #241a44;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23E9E3F7'/%3e%3c/svg%3e");
   border-color: rgba(255, 255, 255, 0.18);
-}
-
-.theme-odoo.theme-odoo-dark .od-card-icon {
-  background-color: #241a44;
 }
 
 .theme-odoo.theme-odoo-dark .od-theme-switch {

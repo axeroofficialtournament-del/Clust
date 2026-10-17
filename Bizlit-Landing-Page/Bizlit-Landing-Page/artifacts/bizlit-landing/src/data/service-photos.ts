@@ -3,8 +3,8 @@
  *
  * Every file in `public/img/services/` is a freely licensed photograph from
  * Wikimedia Commons (CC0, CC BY or CC BY-SA), cropped to 16:10 and re-encoded
- * as WebP. The credit strings are rendered in the footer, because three of the
- * eight licences require attribution.
+ * as WebP. The `credit` block is the licence trail for each file — it is kept
+ * here so the source of every photograph stays recorded with the photo.
  *
  * To swap in the client's own photography, drop a 1600×1000 image into
  * `public/img/services/` under the same name and update `credit` — nothing in
@@ -66,6 +66,17 @@ export const SERVICE_PHOTOS = {
       href: "https://commons.wikimedia.org/wiki/File:Abandoned_shop,_Krak%C3%B3w.jpg",
     },
   },
+  yardSale: {
+    src: "/img/services/yard-sale.webp",
+    alt: "A community yard sale with tables and blankets of second-hand goods in front of a house",
+    ...SIZED,
+    credit: {
+      title: "Community yard sale on Florida's A1A",
+      author: "U.S. National Archives (NARA)",
+      licence: "Public domain",
+      href: "https://commons.wikimedia.org/wiki/File:A1A_Scenic_and_Historic_Coastal_Byway_-_Community_Yard_Sale_on_Florida's_A1A_-_NARA_-_7716672.jpg",
+    },
+  },
   junk: {
     src: "/img/services/junk.webp",
     alt: "A scrap yard stacked with tangled metal under an industrial crane",
@@ -77,7 +88,7 @@ export const SERVICE_PHOTOS = {
       href: "https://commons.wikimedia.org/wiki/File:Metal_scrap_yard_on_Daikoku_Pier_3.jpg",
     },
   },
-  furnished: {
+  clustered: {
     src: "/img/services/furnished.webp",
     alt: "A living room packed with furniture and belongings before clearing",
     ...SIZED,
@@ -111,5 +122,3 @@ export const SERVICE_PHOTOS = {
     },
   },
 } satisfies Record<string, ServicePhoto>;
-
-export const PHOTO_CREDITS = Object.values(SERVICE_PHOTOS).map((photo) => photo.credit);

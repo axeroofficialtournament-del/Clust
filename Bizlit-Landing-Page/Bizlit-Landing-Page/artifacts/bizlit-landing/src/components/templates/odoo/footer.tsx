@@ -1,12 +1,12 @@
 import { Container } from "./bits";
 
 /*
- * Odoo's footer: a deep aubergine band (`--od-footer`) with the wordmark
- * centred at the top, four link groups, a short description with its social
- * icons, and a darker copyright strip (`--od-footer-deep`) underneath.
+ * The footer, kept short: the wordmark and one line of positioning above three
+ * equal link columns, then a plain copyright strip. Nothing here repeats a
+ * section of the page.
  */
 
-const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
+const GROUPS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Services",
     links: [
@@ -15,61 +15,52 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
       { label: "Estates & probate", href: "#services" },
       { label: "Commercial closures", href: "#services" },
       { label: "Junk & scrap", href: "#services" },
-      { label: "How a job runs", href: "#process" },
     ],
   },
   {
-    title: "What we look for",
+    title: "How it works",
     links: [
-      { label: "Storage liens & auctions", href: "#sources" },
-      { label: "Pre-foreclosures & tax sales", href: "#sources" },
-      { label: "Probate & obituaries", href: "#sources" },
-      { label: "Closures & UCC liens", href: "#sources" },
-      { label: "Free sections & junk removals", href: "#sources" },
-      { label: "Sold-price comps", href: "#sources" },
+      { label: "How a job runs", href: "#process" },
+      { label: "What we look for", href: "#sources" },
+      { label: "Before you sign up", href: "#faq" },
     ],
   },
   {
-    title: "Get started",
+    title: "Get in touch",
     links: [
       { label: "Request a clearance", href: "#contact" },
-      { label: "How it runs", href: "#process" },
-      { label: "Questions", href: "#faq" },
       { label: "Talk to us", href: "#contact" },
     ],
   },
 ];
 
-const SOCIALS = [
-  { label: "X", icon: "/icons/x.svg" },
-  { label: "LinkedIn", icon: "/icons/linkedin.svg" },
-  { label: "Facebook", icon: "/icons/facebook.svg" },
-  { label: "Instagram", icon: "/icons/instagram.svg" },
-  { label: "TikTok", icon: "/icons/tiktok.svg" },
-];
-
 export default function Footer() {
   return (
     <footer className="bg-[var(--od-footer)] text-[#cec7e4]">
-      <Container className="py-14">
-        <div className="flex justify-center">
-          <a href="/" className="flex items-center gap-2" aria-label="BIZLIT home">
+      <Container className="py-12">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+          <a href="/" className="inline-flex items-center gap-2 self-start" aria-label="Stuffout home">
             <img src="/logo.png" alt="" className="h-8 w-8 rounded-lg object-cover" />
             <span
               className="text-2xl font-bold text-white"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              bizlit
+              Stuffout
             </span>
           </a>
+
+          <p className="max-w-sm text-[15px] leading-relaxed md:text-right">
+            Clearance, resale and payout for storage units, houses, estates and closing
+            businesses.
+          </p>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[repeat(3,minmax(0,1fr))_1.4fr]">
-          {COLUMNS.map((column) => (
-            <div key={column.title}>
-              <p className="mb-4 text-lg font-semibold text-white">{column.title}</p>
+        <div className="mt-10 grid gap-x-8 gap-y-10 border-t border-white/10 pt-10 sm:grid-cols-3">
+          {GROUPS.map((group) => (
+            <nav key={group.title} aria-label={group.title}>
+              <p className="mb-3 text-sm font-semibold text-white">{group.title}</p>
               <ul className="space-y-2">
-                {column.links.map((link) => (
+                {group.links.map((link) => (
                   <li key={link.label}>
                     <a
                       href={link.href}
@@ -80,51 +71,16 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
+        </div>
 
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-sm text-white">
-              English
-              <span aria-hidden>▾</span>
-            </span>
-
-            <p className="mt-5 text-[15px] leading-relaxed">
-              BIZLIT is the distress-intelligence operating desk: it detects financial
-              distress across storage, real estate, estates, commercial closures and junk,
-              scores every opportunity with four fixed engines, and routes each lead to a
-              single play — bid, wholesale, cleanout, runner-scrap or pass.
-            </p>
-            <p className="mt-4 text-[15px] leading-relaxed">
-              Every deal is structured as revenue share, assignment or pay-after-sale —
-              nothing requires upfront cash.
-            </p>
-
-            <ul className="mt-5 flex items-center gap-4">
-              {SOCIALS.map((social) => (
-                <li key={social.label}>
-                  <a
-                    href="#"
-                    aria-label={social.label}
-                    className="block opacity-70 transition-opacity hover:opacity-100"
-                  >
-                    <img src={social.icon} alt="" className="h-[18px] w-[18px] invert" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="mt-10 border-t border-white/10 pt-6">
+          <p className="text-sm text-[#a49ec2]">
+            © {new Date().getFullYear()} Stuffout. All rights reserved.
+          </p>
         </div>
       </Container>
-
-      <div className="bg-[var(--od-footer-deep)] py-4">
-        <Container>
-          <p className="text-center text-sm text-[#a49ec2]">
-            © {new Date().getFullYear()} BIZLIT. All rights reserved. · Built with React, Vite and
-            Supabase
-          </p>
-        </Container>
-      </div>
     </footer>
   );
 }

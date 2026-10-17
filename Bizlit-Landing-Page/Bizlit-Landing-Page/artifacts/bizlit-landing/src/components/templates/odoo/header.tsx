@@ -123,13 +123,13 @@ export default function Header() {
       <Container className="max-w-none px-4 lg:px-8">
         <div className="flex h-[60px] items-center justify-between gap-4">
           {/* logo */}
-          <a href="/" className="flex shrink-0 items-center gap-2" aria-label="BIZLIT home">
+          <a href="/" className="flex shrink-0 items-center gap-2" aria-label="Stuffout home">
             <img src="/logo.png" alt="" className="h-9 w-9 rounded-lg object-cover" />
             <span
               className="text-[2rem] leading-none font-bold tracking-tight text-[var(--od-ink)]"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              bizlit
+              Stuffout
             </span>
           </a>
 
@@ -231,9 +231,9 @@ export default function Header() {
                     Every signal is scored for you
                   </p>
                   <p className="mt-2 text-sm text-[var(--od-body)]">
-                    Pull them on a set cadence — daily sweeps, weekly dockets — and the
-                    router ranks each lead into a single play: bid, wholesale, cleanout,
-                    scrap or pass.
+                    Pull them on a set cadence: daily sweeps, weekly dockets. The router
+                    ranks each lead into a single play: bid, wholesale, cleanout, scrap or
+                    pass.
                   </p>
                   <button
                     type="button"

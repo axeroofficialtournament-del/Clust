@@ -13,7 +13,7 @@ import { Container } from "./bits";
  * The icons are the reference's own: every Odoo app module ships
  * `static/description/icon.svg`, which is what odoo.com serves from
  * download.odoocdn.com — not a packaged icon library. They are paired here
- * with the asset classes and signal sources the distress desk sweeps, so the
+ * with the asset classes and signal sources the clearance desk sweeps, so the
  * captions and the marker writing are ours while the artwork and every
  * measurement are the reference's.
  */
@@ -30,7 +30,7 @@ export const SOURCES: Source[] = [
   { slug: "sale_subscription", label: "Tax delinquency" },
   { slug: "ai_app", label: "Sheriff sales" },
   { slug: "point_of_sale", label: "Probate estates" },
-  { slug: "mail", label: "Obituaries" },
+  { slug: "website_blog", label: "Obituaries" },
   { slug: "documents", label: "Estate sales" },
   { slug: "project", label: "Executors & heirs" },
   { slug: "hr_timesheet", label: "Business closures" },
@@ -41,7 +41,7 @@ export const SOURCES: Source[] = [
   { slug: "website", label: "Junk removals" },
   { slug: "mass_mailing", label: "Curb alerts" },
   { slug: "purchase", label: "Scrap metal" },
-  { slug: "stock", label: "E-waste" },
+  { slug: "repair", label: "E-waste" },
   { slug: "mrp", label: "Tools & equipment" },
   { slug: "sale", label: "Furniture lots" },
   { slug: "hr", label: "Electronics" },
@@ -202,10 +202,10 @@ function DigestPill() {
         {event.date}
       </div>
       <a
-        href="#pricing"
+        href="#contact"
         className="od-stretched text-nowrap text-[var(--od-violet)] no-underline md:mx-[1rem] lg:ms-[3rem]"
       >
-        Get the leads ⟶
+        Request a clearance ⟶
       </a>
     </div>
   );
@@ -288,7 +288,7 @@ function WithoutSwitch({
         onChange={(event) => onChange(event.target.checked)}
       />
       <label className="od-switch-label" htmlFor={id}>
-        Imagine without BIZLIT
+        Imagine without Stuffout
       </label>
     </div>
   );

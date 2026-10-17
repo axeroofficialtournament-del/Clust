@@ -65,10 +65,7 @@ export function LevelUpBand() {
 
       <Container className="relative z-[1]">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-[0.75rem] font-semibold tracking-[0.16em] text-[var(--od-violet)] uppercase">
-            Every class of job
-          </p>
-          <h2 className="od-d2 mt-[0.75rem]">
+          <h2 className="od-d2">
             One crew, <Mark tone="yellow-03">one set of terms.</Mark>
           </h2>
           <p className="mt-[1rem] text-[1.125rem] leading-relaxed text-[var(--od-body)]">
@@ -125,7 +122,7 @@ export function LevelUpBand() {
 
 type Step = {
   icon: ReactNode;
-  day: string;
+  label: string;
   title: string;
   copy: string;
 };
@@ -133,31 +130,31 @@ type Step = {
 const STEPS: Step[] = [
   {
     icon: <Send size={16} />,
-    day: "Day 0",
+    label: "Step 1",
     title: "Tell us what is there",
     copy: "One form, or a call. The address, the size of the job and anything that needs a licensed hand.",
   },
   {
     icon: <ClipboardCheck size={16} />,
-    day: "Day 1",
+    label: "Step 2",
     title: "Site check and inventory",
     copy: "We walk the space, photograph it and price what is worth selling against real resale comps.",
   },
   {
     icon: <FileSignature size={16} />,
-    day: "Day 1–2",
+    label: "Step 3",
     title: "Fixed plan, signed",
-    copy: "A written authorization with the split stated up front: what we do, what you keep, what it costs — which is nothing.",
+    copy: "A written authorization with the split stated up front: what we do, what you keep and what it costs, which is nothing.",
   },
   {
     icon: <Truck size={16} />,
-    day: "Day 2–4",
+    label: "Step 4",
     title: "Clear, sort, transport",
     copy: "The crew pulls the sellable items first, the scrap goes to the yard, and the space gets swept.",
   },
   {
     icon: <Wallet size={16} />,
-    day: "Day 5–7",
+    label: "Step 5",
     title: "Settle and hand back",
     copy: "Your share is remitted with the payout maths in writing, and the room is handed over empty.",
   },
@@ -167,17 +164,9 @@ export function StepsBand() {
   return (
     <Band id="process" className="pt-[1rem] pb-[3rem] lg:pb-[4rem]">
       <div className="max-w-3xl">
-        <p className="flex items-center gap-[0.625rem] text-[0.75rem] font-semibold tracking-[0.16em] text-[var(--od-violet)] uppercase">
-          <span aria-hidden className="h-[1px] w-[1.75rem] bg-[rgba(109,40,217,0.35)]" />
-          The clearance run
-        </p>
-        <h2 className="od-d2 mt-[1rem]">
+        <h2 className="od-d2">
           From first call to <Mark tone="blue">empty room.</Mark>
         </h2>
-        <p className="mt-[1.25rem] text-[1.125rem] leading-relaxed text-[var(--od-body)]">
-          Five steps, one track, no surprises in the middle. Everything below is on the agreement
-          before a single item moves.
-        </p>
       </div>
 
       {/* The track: a vertical rule on small screens, a horizontal one from lg. */}
@@ -196,7 +185,7 @@ export function StepsBand() {
 
               <div className="lg:pr-[0.75rem]">
                 <span className="text-[0.6875rem] font-bold tracking-[0.12em] text-[var(--od-violet)] uppercase">
-                  {step.day}
+                  {step.label}
                 </span>
                 <h3 className="mt-[0.25rem] text-[1rem] leading-tight font-semibold text-[var(--od-ink)]">
                   {step.title}
