@@ -69,6 +69,15 @@ export default defineConfig({
     strictPort: true,
     host: '0.0.0.0',
     allowedHosts: true,
+    // The contact form posts to /api; in development that is the workspace
+    // Express server. Behind a deployment, point VITE_SERVICE_REQUEST_ENDPOINT
+    // at the API and this proxy never runs.
+    proxy: {
+      '/api': {
+        target: process.env.API_PROXY_TARGET ?? 'http://127.0.0.1:5000',
+        changeOrigin: true,
+      },
+    },
     fs: {
       strict: true,
     },

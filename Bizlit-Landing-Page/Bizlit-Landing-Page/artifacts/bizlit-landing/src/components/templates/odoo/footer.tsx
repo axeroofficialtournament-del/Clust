@@ -8,18 +8,18 @@ import { Container } from "./bits";
 
 const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
-    title: "Workspace",
+    title: "Services",
     links: [
-      { label: "Lead pipeline", href: "#screens" },
-      { label: "Storage engine", href: "#screens" },
-      { label: "Runner network", href: "#screens" },
-      { label: "Outreach & follow-up", href: "#screens" },
-      { label: "Deal ledger", href: "#screens" },
-      { label: "Calibration", href: "#screens" },
+      { label: "Storage units", href: "#services" },
+      { label: "Houses", href: "#services" },
+      { label: "Estates & probate", href: "#services" },
+      { label: "Commercial closures", href: "#services" },
+      { label: "Junk & scrap", href: "#services" },
+      { label: "How a job runs", href: "#process" },
     ],
   },
   {
-    title: "What it watches",
+    title: "What we look for",
     links: [
       { label: "Storage liens & auctions", href: "#sources" },
       { label: "Pre-foreclosures & tax sales", href: "#sources" },
@@ -32,11 +32,10 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Get started",
     links: [
-      { label: "Pricing", href: "#pricing" },
-      { label: "Help", href: "#faq" },
-      { label: "Sign in", href: "/sign-in" },
-      { label: "Create an account", href: "/sign-up" },
-      { label: "Product tour", href: "#screens" },
+      { label: "Request a clearance", href: "#contact" },
+      { label: "How it runs", href: "#process" },
+      { label: "Questions", href: "#faq" },
+      { label: "Talk to us", href: "#contact" },
     ],
   },
 ];

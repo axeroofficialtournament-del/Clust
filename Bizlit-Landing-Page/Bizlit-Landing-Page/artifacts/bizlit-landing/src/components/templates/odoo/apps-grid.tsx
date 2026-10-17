@@ -221,10 +221,10 @@ function AppWall({ without }: { without: boolean }) {
   return (
     <div className="relative flow-root">
       <div className="od-apps-row">
-        {/* Every tile is a door into the sign-up: the wall is the pitch, and
-            the switch above it is what a visitor reaches for next. */}
+        {/* Every tile is a door into the request form: the wall is the pitch,
+            and the switch above it is what a visitor reaches for next. */}
         {SOURCES.map((source) => (
-          <a key={source.label} href="/sign-up" className="od-app-entry">
+          <a key={source.label} href="#contact" className="od-app-entry">
             <figure>
               <img
                 width={80}
@@ -322,7 +322,7 @@ export default function SourcesBand() {
             <WithoutSwitch on={without} onChange={setWithout} id="x_wd_apps_switcher" />
           </div>
           <div className="w-full pt-[40px] text-end min-[1200px]:w-1/2">
-            <a href="#screens" className="text-[var(--od-violet)] no-underline">
+            <a href="#services" className="text-[var(--od-violet)] no-underline">
               View all signals
               <img
                 src="/img/odoo/secondary_arrow_sm_03.svg"

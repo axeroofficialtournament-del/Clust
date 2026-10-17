@@ -1,6 +1,7 @@
 import {
   BellRing,
   BadgeCheck,
+  ChevronDown,
   ClipboardList,
   Gavel,
   Mail,
@@ -11,9 +12,8 @@ import {
   Wallet,
 } from "lucide-react";
 import type { ReactNode } from "react";
-import { Badge } from "@/components/primitives";
 import { cn } from "@/lib/utils";
-import { Band, Container, Doodle, Mark, Underline, odBtn, odBtnLight } from "./bits";
+import { Band, Container, Mark, Underline, odBtn, odBtnLight } from "./bits";
 
 /*
  * The middle of the odoo.com landing page, in order: what the product does, the
@@ -163,248 +163,6 @@ export function FeaturesBand() {
   );
 }
 
-/* --------------------------------------------------------------- level up */
-
-/*
- * The screens band below shows the workspace; this band is odoo.com's collage
- * band, so it carries four small panels of the same desk instead — each drawn
- * from the lead pipeline's own shape rather than stock imagery.
- */
-
-/** The strip every workspace card wears: its icon, its title, one chip. */
-function ScreenHead({
-  title,
-  chip,
-  tone = "neutral",
-}: {
-  title: string;
-  chip: string;
-  tone?: "neutral" | "good" | "warn" | "bad" | "info" | "brand";
-}) {
-  return (
-    <div className="flex items-center gap-[0.375rem] border-b border-slate-100 pb-[0.375rem]">
-      <span className="text-[0.6875rem] font-semibold text-slate-900">{title}</span>
-      <Badge tone={tone} className="ms-auto">
-        {chip}
-      </Badge>
-    </div>
-  );
-}
-
-/** One row of a workspace list, at the size these cards can hold. */
-const MOCK_ROW =
-  "flex items-center gap-[0.5rem] rounded-[0.5rem] bg-slate-50 px-[0.5rem] py-[0.25rem] leading-tight";
-
-/*
- * `area` is the cell, `shift` nudges it over its neighbour, and `z` decides
- * who lies on top where the two mats meet — the same tuck Odoo's own cells get
- * from their overlapping spans.
- */
-const PANELS: { title: string; area: string; z: number; shift?: string; body: ReactNode }[] = [
-  {
-    title: "Scoring",
-    area: "7 / 7 / 14 / 13",
-    z: 9,
-    shift: "-ml-[3rem]",
-    body: (
-      <div className="text-[0.6875rem]">
-        <ScreenHead title="Storage engine" chip="Score 81" tone="good" />
-
-        <ul className="mt-[0.5rem] space-y-[0.375rem]">
-          {[
-            ["Brand visibility", "94", "Snap-on chest, pro audio"],
-            ["Container mix", "60", "Uniform moving boxes"],
-            ["Scrap floor cover", "100", "≥ 1.5× cleanout cost"],
-          ].map(([label, score, note]) => (
-            <li key={label} className={MOCK_ROW}>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[0.6875rem] font-medium text-slate-900">
-                  {label}
-                </span>
-                <span className="block truncate text-[0.625rem] text-slate-500">{note}</span>
-              </span>
-              <span className="shrink-0 rounded-full bg-[rgba(168,85,247,0.14)] px-[0.375rem] py-[0.0625rem] text-[0.625rem] font-semibold text-[var(--od-accent)]">
-                {score}
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        <p className="mt-[0.5rem] text-[0.625rem] text-slate-500">
-          EV $642 → bid ceiling EV × 0.45 = <strong>$290</strong>
-        </p>
-      </div>
-    ),
-  },
-  {
-    title: "Router",
-    area: "7 / 1 / 14 / 7",
-    z: 8,
-    shift: "ml-[2.5rem]",
-    body: (
-      <div className="text-[0.6875rem]">
-        <ScreenHead title="Master router" chip="1 decision" tone="brand" />
-
-        <div className="mt-[0.5rem] space-y-[0.375rem]">
-          {[
-            ["Storage unit — 81", "BID to $290"],
-            ["Property — 80", "CONTRACT · fee $10k"],
-            ["Estate — 72", "CLEANOUT-CONSIGN"],
-            ["Bulk junk", "RUN · scrap 1.6× cost"],
-            ["Commercial — 38", "PASS · logged"],
-          ].map(([lead, play]) => (
-            <div key={lead} className={MOCK_ROW}>
-              <span className="min-w-0 flex-1 truncate text-[0.6875rem] font-medium text-slate-900">
-                {lead}
-              </span>
-              <Badge
-                tone={play.startsWith("PASS") ? "neutral" : play.startsWith("RUN") ? "info" : "good"}
-              >
-                {play.split(" ")[0]}
-              </Badge>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-[0.5rem] text-[0.625rem] text-slate-500">
-          Marginals fall to the scrap gate before any pass is final
-        </p>
-      </div>
-    ),
-  },
-  {
-    title: "Outreach",
-    area: "1 / 1 / 8 / 7",
-    z: 2,
-    body: (
-      <div className="text-[0.6875rem]">
-        <ScreenHead title="Owner outreach" chip="3 sent today" tone="good" />
-
-        <ul className="mt-[0.5rem] space-y-[0.375rem]">
-          {[
-            ["Storage tenant — last notice", "keep 25% of resale"],
-            ["Executor — county case 813", "clear free, 85% remit"],
-            ["Facility manager — pilot", "broom-clean in 48h"],
-          ].map(([who, hook]) => (
-            <li key={who} className={MOCK_ROW}>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[0.6875rem] font-medium text-slate-900">
-                  {who}
-                </span>
-                <span className="block truncate text-[0.625rem] text-slate-500">{hook}</span>
-              </span>
-              <Badge tone="neutral">sent</Badge>
-            </li>
-          ))}
-        </ul>
-
-        <p className="mt-[0.5rem] text-[0.625rem] text-slate-500">
-          Reply or three attempts inside seven days, then the stage moves
-        </p>
-      </div>
-    ),
-  },
-  {
-    title: "Runner network",
-    area: "1 / 7 / 8 / 13",
-    z: 4,
-    shift: "-ml-[3rem] -mt-[2.5rem]",
-    body: (
-      <div className="text-[0.6875rem]">
-        <ScreenHead title="Runners near the job" chip="5 in radius" tone="info" />
-
-        <ul className="mt-[0.5rem] space-y-[0.375rem]">
-          {[
-            ["Marcus T.", "1.4 mi · 94% done · paid same day"],
-            ["Runner crew #12", "3 mi · 30–40% of net"],
-            ["Chris O.", "0.8 mi · student pool"],
-          ].map(([who, note]) => (
-            <li key={who} className={MOCK_ROW}>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[0.6875rem] font-medium text-slate-900">
-                  {who}
-                </span>
-                <span className="block truncate text-[0.625rem] text-slate-500">{note}</span>
-              </span>
-              <Badge tone="good">hire</Badge>
-            </li>
-          ))}
-        </ul>
-
-        <p className="mt-[0.5rem] text-[0.625rem] text-slate-500">
-          Nobody is paid upfront — pay fast, pay exactly, publish the math
-        </p>
-      </div>
-    ),
-  },
-];
-
-export function LevelUpBand() {
-  return (
-    <section className="od-round-bottom relative bg-[var(--od-band)] py-[3rem] lg:py-[6rem]">
-      {/* `o_illustration_doodle_02`, the orange doodle behind this band. */}
-      <div className="od-shape od-shape-02" aria-hidden />
-
-      <Container className="relative z-[1]">
-        <h2 className="od-d2 mb-[4rem] lg:text-center">
-          Level up your deal <Mark tone="yellow-03">flow</Mark>
-        </h2>
-
-        {/* Odoo's `o_grid_mode` collage: 12 columns, 50px rows, 10px of
-            padding on every cell — ours carries the desk's own panels. */}
-        <div className="mx-[-10px] hidden lg:grid lg:grid-cols-12 lg:auto-rows-[50px]">
-          {PANELS.map((panel) => (
-            <figure
-              key={panel.title}
-              className={cn(
-                "relative p-[10px] transition-transform duration-200 ease-out hover:z-[20] hover:-translate-y-[0.25rem]",
-                panel.shift,
-              )}
-              style={{ gridArea: panel.area, zIndex: panel.z }}
-            >
-              <div className="od-shot-frame od-panel-shot h-full">{panel.body}</div>
-            </figure>
-          ))}
-        </div>
-
-        {/* Below `lg` the overlap would be unreadable, so the same four stack. */}
-        <div className="od-mobile-panels mt-[2rem] grid gap-[1.5rem] sm:grid-cols-2 lg:hidden">
-          {PANELS.map((panel) => (
-            <div key={panel.title} className="od-shot-frame min-h-0">
-              {panel.body}
-            </div>
-          ))}
-        </div>
-
-        {/* `col-lg-6 col-xl-5 pt-6 text-lg-center`: the lead line, a doodled
-            arrow, then the play-styled link into the workspace screens. */}
-        <div className="flex justify-center">
-          <div className="pt-[4rem] lg:w-5/12 lg:text-center">
-            <p className="od-lead mb-[1.5rem]">
-              <strong className="font-medium">Everything on one desk,</strong> scored as it
-              moves — signals swept on schedule, every lead carrying its own number, and a
-              bid ceiling computed before you ever raise a paddle.
-            </p>
-
-            <Doodle
-              src="/img/odoo/arrow_doodle_3.svg"
-              width={44}
-              className="mx-auto mb-[1.5rem] rotate-[40deg]"
-            />
-
-            <a
-              href="#screens"
-              className="od-doodle mx-auto rotate-[350deg] text-[2rem] no-underline"
-            >
-              See it on the live board
-            </a>
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
 /* --------------------------------------------------------------- native AI */
 
 const AI_ITEMS = [
@@ -514,11 +272,11 @@ export function DoneRightBand() {
               </span>
             </p>
             <div className="mt-[1.5rem] flex flex-wrap gap-[1rem]">
-              <a href="/sign-up" className={odBtn}>
-                Start free
+              <a href="#contact" className={odBtn}>
+                Request a clearance
               </a>
-              <a href="/sign-in" className={odBtnLight}>
-                Sign in
+              <a href="#process" className={odBtnLight}>
+                How it runs
               </a>
             </div>
             <p className="mt-[1rem] text-[0.875rem] text-[var(--od-muted)]">

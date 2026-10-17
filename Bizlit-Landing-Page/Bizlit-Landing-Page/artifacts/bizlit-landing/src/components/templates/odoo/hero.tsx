@@ -1,47 +1,92 @@
-import { Container, Doodle, Mark, odBtn, odBtnLight } from "./bits";
+import { SERVICE_PHOTOS } from "@/data/service-photos";
+import { Container, Mark, odBtn, odBtnLight } from "./bits";
 
 /*
- * The odoo.com hero, to the letter: `pt-5 pb-6 text-center`, an h1 in
- * display-1 with the bold yellow stroke behind its last words, then an h2 in
- * display-3 that carries the handwritten revenue-share note — the doodled
- * arrow and two lines of Caveat, hung off the bottom-right of the highlighted
- * phrase, turned 350deg and pulled 10rem past its edge. (Our bar is fixed, so
- * the 3rem of top padding starts below it.)
+ * The hero, in two columns: the promise on the left, the thing being sold on
+ * the right — one apartment photographed twice, furnished and then cleared.
+ *
+ * The split is the whole pitch in one image, so the words stay short: a
+ * headline, a line of what and who for, two buttons, and the terms underneath.
  */
 
 export default function Hero() {
   return (
-    <section className="pt-[calc(3rem+60px)] pb-[4rem] text-center">
+    <section className="pt-[calc(2rem+60px)] pb-[3.5rem] lg:pt-[calc(4rem+60px)] lg:pb-[5rem]">
       <Container>
-        <h1 className="od-d1">
-          Every distress signal, <Mark>on one desk.</Mark>
-        </h1>
+        <div className="grid items-center gap-[2rem] lg:grid-cols-[1.02fr_1fr] lg:gap-[3.5rem]">
+          {/* ------------------------------------------------------ words */}
+          <div className="text-center lg:text-left">
+            <p className="inline-flex items-center gap-[0.5rem] rounded-full bg-[var(--od-tone-violet-bg)] px-[0.75rem] py-[0.3rem] text-[0.75rem] font-semibold tracking-[0.08em] text-[var(--od-tone-violet-fg)] uppercase">
+              <span aria-hidden className="h-[0.4rem] w-[0.4rem] rounded-full bg-[var(--od-violet)]" />
+              Clearance · resale · payout
+            </p>
 
-        <h2 className="od-d3 relative mb-[3rem]">
-          Storage units, houses, estates and closures — distilled down to{" "}
-          <span className="od-mark-blue relative">
-            one decision.
-            <em className="od-doodle absolute end-0 top-full -mt-[1rem] -me-[10rem] hidden rotate-[350deg] lg:block">
-              <Doodle
-                src="/img/odoo/arrow_doodle_1.svg"
-                width={50}
-                className="mx-auto mb-[1rem]"
-              />
-              $0 upfront —
+            <h1 className="od-d1 mt-[1.25rem]">
+              Clear the space.
               <br />
-              we only earn when a deal pays
-            </em>
-          </span>
-        </h2>
+              <Mark>Keep the value.</Mark>
+            </h1>
 
-        <div>
-          <a href="/sign-up" className={odBtn + " mb-[0.5rem] me-[1rem]"}>
-            See the scores
-            <span className="hidden md:inline"> - It&rsquo;s free</span>
-          </a>
-          <a href="#screens" className={odBtnLight + " mb-[0.5rem]"}>
-            What the desk does
-          </a>
+            <p className="mx-auto mt-[1.5rem] max-w-[34rem] text-[1.125rem] leading-relaxed text-[var(--od-body)] lg:mx-0 lg:text-[1.25rem]">
+              Storage units, probate homes and closing businesses — cleared, sorted and sold,
+              with nothing to pay upfront. You get the empty room and your share of what it held.
+            </p>
+
+            <div className="mt-[2rem]">
+              <a href="#contact" className={odBtn + " mb-[0.5rem] me-[0.5rem]"}>
+                Request a clearance
+              </a>
+              <a href="#services" className={odBtnLight + " mb-[0.5rem]"}>
+                See what we clear
+              </a>
+            </div>
+
+            <p className="mt-[1.25rem] text-[0.875rem] text-[var(--od-muted)]">
+              No deposit · written agreement · one crew from first look to handover
+            </p>
+          </div>
+
+          {/* ------------------------------------------------------ picture */}
+          <figure className="relative m-0">
+            <div className="grid grid-cols-2 gap-[0.5rem] sm:gap-[0.75rem]">
+              <div className="od-photo aspect-[3/4] rounded-[0.75rem]">
+                <img
+                  src={SERVICE_PHOTOS.furnished.src}
+                  alt={SERVICE_PHOTOS.furnished.alt}
+                  width={SERVICE_PHOTOS.furnished.width}
+                  height={SERVICE_PHOTOS.furnished.height}
+                  loading="eager"
+                  decoding="async"
+                />
+                <span className="od-photo-flag od-photo-flag-left !text-[0.625rem]">
+                  Furnished
+                </span>
+              </div>
+
+              <div className="od-photo aspect-[3/4] rounded-[0.75rem]">
+                <img
+                  src={SERVICE_PHOTOS.cleared.src}
+                  alt={SERVICE_PHOTOS.cleared.alt}
+                  width={SERVICE_PHOTOS.cleared.width}
+                  height={SERVICE_PHOTOS.cleared.height}
+                  loading="eager"
+                  decoding="async"
+                />
+                <span className="od-photo-flag od-photo-flag-right !text-[0.625rem] !bg-[rgba(109,40,217,0.85)]">
+                  Cleared
+                </span>
+              </div>
+            </div>
+
+            <figcaption className="mx-auto -mt-[1.25rem] w-[86%] rounded-[0.6rem] border border-[var(--od-border)] bg-white px-[1rem] py-[0.7rem] text-center shadow-[0_0.75rem_2rem_rgba(23,16,43,0.10)]">
+              <span className="block text-[0.8125rem] font-semibold text-[var(--od-ink)]">
+                One apartment, two states
+              </span>
+              <span className="block text-[0.75rem] leading-snug text-[var(--od-muted)]">
+                Part furnished, part empty — that is the handover we sell.
+              </span>
+            </figcaption>
+          </figure>
         </div>
       </Container>
     </section>

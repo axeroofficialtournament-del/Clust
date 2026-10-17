@@ -1,18 +1,22 @@
 import Header from "@/components/templates/odoo/header";
 import Hero from "@/components/templates/odoo/hero";
 import SourcesBand from "@/components/templates/odoo/apps-grid";
-import { ScreensBand } from "@/components/templates/odoo/app-screens";
+import { PhotoCreditLine, ServicesBand } from "@/components/templates/odoo/services";
+import { LevelUpBand, StepsBand } from "@/components/templates/odoo/levelup";
+import { ContactBand } from "@/components/templates/odoo/contact";
 import { ArrowBand, UsersBand, TestimonialBand } from "@/components/templates/odoo/proof";
-import { AiBand, DoneRightBand, FaqBand, FeaturesBand, LevelUpBand, type FaqItem } from "@/components/templates/odoo/story";
+import { AiBand, DoneRightBand, FaqBand, FeaturesBand, type FaqItem } from "@/components/templates/odoo/story";
 import Cta from "@/components/templates/odoo/cta";
 import Footer from "@/components/templates/odoo/footer";
 
 /*
- * The landing page, rebuilt to odoo.com's design: the flat white header, the
- * handwriting-weight hero, then a run of grey bands (the signal wall, what the
- * desk does, the level-up panels, the workspace screens), a white AI band, the
- * arched "done right" band carrying the plan, social proof, the FAQ, and the
- * closing call to action above the aubergine footer.
+ * The landing page, on odoo.com's design: the flat white header, the two-column
+ * hero (promise on the left, the furnished-to-cleared split on the right),
+ * the "imagine without" source wall straight underneath it, the five classes
+ * of work with a photograph each, the clearance run on its track line, then
+ * what the desk does, the four-class collage, a white AI band, the arched
+ * "done right" band carrying the plan, social proof, the FAQ, the service
+ * request form, and the closing call to action above the aubergine footer.
  *
  * It is pitched for the distress-intelligence operating desk: sources swept on
  * cadence, four scoring engines and a master router, one decision per lead —
@@ -58,21 +62,28 @@ export function LandingPage() {
       <main>
         <Hero />
 
-        {/* the grey run — odoo.com keeps these bands contiguous */}
+        {/* "Imagine without BIZLIT" sits directly under the hero */}
         <SourcesBand />
+
+        {/* the five classes of work, each with its own photograph */}
+        <ServicesBand />
+        <StepsBand />
+
+        {/* the grey run — odoo.com keeps these bands contiguous */}
         <FeaturesBand />
         <LevelUpBand />
-        <ScreensBand />
 
         <AiBand />
         <DoneRightBand />
 
-        {/* white again for the proof and the close */}
+        {/* white again for the proof, the request form and the close */}
         <ArrowBand />
         <UsersBand />
         <TestimonialBand />
         <FaqBand items={FAQ} />
+        <ContactBand />
         <Cta />
+        <PhotoCreditLine />
       </main>
       <Footer />
     </div>

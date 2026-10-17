@@ -54,7 +54,8 @@ const LINKS: { id: string; label: string; panel?: PanelGroup[] }[] = [
       },
     ],
   },
-  { id: "screens", label: "Product" },
+  { id: "services", label: "Services" },
+  { id: "process", label: "How it runs" },
   { id: "pricing", label: "Pricing" },
   { id: "faq", label: "Help" },
 ];
@@ -168,13 +169,13 @@ export default function Header() {
             {/* day / night */}
             <ThemeSwitch dark={dark} onToggle={() => setDark((v) => !v)} className="me-1" />
             <a
-              href="/sign-in"
+              href="#contact"
               className="hidden px-3 py-2 text-[15px] font-medium text-[var(--od-ink)] transition-colors hover:text-[var(--od-violet)] sm:block"
             >
-              Sign in
+              Talk to us
             </a>
-            <a href="/sign-up" className={odBtnSm}>
-              Start free
+            <a href="#contact" className={odBtnSm}>
+              Request service
             </a>
             <button
               type="button"
@@ -273,11 +274,11 @@ export default function Header() {
                 ))}
               </ul>
               <div className="mt-4 flex flex-col gap-2">
-                <a href="/sign-in" className="od-btn od-btn-light">
-                  Sign in
+                <a href="#services" className="od-btn od-btn-light" onClick={() => setMobile(false)}>
+                  What we clear
                 </a>
-                <a href="/sign-up" className="od-btn od-btn-primary">
-                  Start free
+                <a href="#contact" className="od-btn od-btn-primary" onClick={() => setMobile(false)}>
+                  Request service
                 </a>
               </div>
             </Container>

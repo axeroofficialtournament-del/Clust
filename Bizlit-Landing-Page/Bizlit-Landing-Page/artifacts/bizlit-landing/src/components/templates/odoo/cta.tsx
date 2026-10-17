@@ -17,16 +17,16 @@ export default function Cta() {
           every distress <span className="text-[var(--od-accent)]">one decision</span>
         </h3>
 
-        <a href="/sign-up" className={odBtnLg + " mb-[1rem]"}>
-          Start now - It&rsquo;s free
+        <a href="#contact" className={odBtnLg + " mb-[1rem]"}>
+          Request service
         </a>
 
         <Doodle src="/img/odoo/green_arrow_sm_01.svg" width={15} className="mx-auto mb-[0.5rem]" />
 
         <small className="block text-[0.875rem] leading-normal">
-          No credit card required
+          Nothing upfront, ever
           <br />
-          Instant access
+          Written agreement first
         </small>
       </Container>
     </section>
